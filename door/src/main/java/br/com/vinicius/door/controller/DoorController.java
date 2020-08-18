@@ -23,6 +23,7 @@ public class DoorController {
 
     @GetMapping(value = "/{idDoor}")
     public DoorResponse getDoor(@PathVariable Long idDoor){
+        System.out.println("Consultaram a porta " + idDoor + " em " + System.currentTimeMillis());
         return service.getDoor(idDoor);
     }
 

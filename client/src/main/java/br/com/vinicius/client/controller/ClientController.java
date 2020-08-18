@@ -23,6 +23,7 @@ public class ClientController {
 
     @GetMapping("/{idClient}")
     public ClientResponse getClient(@PathVariable Long idClient) {
+        System.out.println("Consultaram o cliente " + idClient + " em " + System.currentTimeMillis());
         return service.findClient(idClient);
     }
 
