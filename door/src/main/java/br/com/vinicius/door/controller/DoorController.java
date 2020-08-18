@@ -21,4 +21,9 @@ public class DoorController {
         return service.creatDoor(mapper.to(model));
     }
 
+    @GetMapping(value = "/{idDoor}")
+    public DoorResponse getDoor(@PathVariable Long idDoor){
+        return service.getDoor(idDoor);
+    }
+
 }

@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class DoorMapper {
 
+    private DoorMapper() {}
+
     public DoorEntity to (DoorModel model) {
         DoorEntity entity = new DoorEntity();
         entity.setFloor(model.getFloor());
