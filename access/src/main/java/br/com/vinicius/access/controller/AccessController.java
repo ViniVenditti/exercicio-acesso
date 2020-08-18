@@ -6,6 +6,8 @@ import br.com.vinicius.access.model.AccessModel;
 import br.com.vinicius.access.service.AccessService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/acesso")
 public class AccessController {
@@ -33,6 +35,11 @@ public class AccessController {
     public AccessModel getAccess(@PathVariable Long clientId, @PathVariable Long doorId) {
         AccessEntity entity = setEntity(clientId, doorId);
         return service.getAccess(entity);
+    }
+
+    @GetMapping
+    public List<AccessModel> getListAccess() {
+        return service.getListAccess();
     }
 
     private AccessEntity setEntity(Long clientId, Long doorId) {
