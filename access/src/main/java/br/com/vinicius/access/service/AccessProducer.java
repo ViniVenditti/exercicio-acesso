@@ -14,7 +14,6 @@ public class AccessProducer {
     }
 
     public void sendToKafka(AccessModelLog model) {
-        System.out.println("Enviei ao kafka " + model);
         producer.send("spec4-vinicius-fermino-2", model);
     }
 
