@@ -7,6 +7,7 @@ import br.com.vinicius.access.exceptions.AccessAlreadyExistException;
 import br.com.vinicius.access.exceptions.AccessNotFoundException;
 import br.com.vinicius.access.mapper.AccessMapper;
 import br.com.vinicius.access.model.AccessModel;
+import br.com.vinicius.access.model.AccessModelLog;
 import br.com.vinicius.access.model.ClientModel;
 import br.com.vinicius.access.model.DoorModel;
 import br.com.vinicius.access.repository.AccessRepository;
@@ -24,12 +25,14 @@ public class AccessService {
     private AccessMapper mapper;
     private ClientClient clientClient;
     private DoorClient doorClient;
+    private AccessProducer producer;
 
-    public AccessService(AccessRepository repository, AccessMapper mapper, ClientClient clientClient, DoorClient doorClient) {
+    public AccessService(AccessRepository repository, AccessMapper mapper, ClientClient clientClient, DoorClient doorClient, AccessProducer producer) {
         this.repository = repository;
         this.mapper = mapper;
         this.clientClient = clientClient;
         this.doorClient = doorClient;
+        this.producer = producer;
     }
 
     public AccessModel registryAccess(AccessEntity entity){
@@ -50,8 +53,10 @@ public class AccessService {
 
     public AccessModel getAccess(AccessEntity entity){
         if(verifyIfAccessExistAndClientAndDoor(entity)){
+            producer.sendToKafka(mapper.to(entity, true));
             return mapper.to(entity);
         }
+        producer.sendToKafka(mapper.to(entity, false));
         throw new AccessNotFoundException();
     }
 
